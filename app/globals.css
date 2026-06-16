@@ -3,23 +3,60 @@
 /* ===== Class-based dark mode ===== */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ===== Design Tokens (Light Mode = default) ===== */
+/* ===== Raw CSS Variables (light = default) ===== */
+:root {
+  --bg: #F8FAFC;
+  --fg: #020617;
+  --primary: #0F172A;
+  --primary-fg: #FFFFFF;
+  --secondary: #334155;
+  --accent: #0369A1;
+  --accent-fg: #FFFFFF;
+  --muted: #E8ECF1;
+  --muted-fg: #64748B;
+  --border: #E2E8F0;
+  --card: rgba(255, 255, 255, 0.6);
+  --ring: #0F172A;
+  --destructive: #DC2626;
+  --glass-bg: rgba(255, 255, 255, 0.3);
+  --glass-border: rgba(255, 255, 255, 0.35);
+}
+
+/* ===== Dark Mode ===== */
+.dark {
+  --bg: #020617;
+  --fg: #F1F5F9;
+  --primary: #38BDF8;
+  --primary-fg: #020617;
+  --secondary: #94A3B8;
+  --accent: #0EA5E9;
+  --accent-fg: #FFFFFF;
+  --muted: #1E293B;
+  --muted-fg: #94A3B8;
+  --border: #1E293B;
+  --card: rgba(15, 23, 42, 0.6);
+  --ring: #38BDF8;
+  --glass-bg: rgba(15, 23, 42, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ===== Tailwind Theme (references CSS variables) ===== */
 @theme {
-  --color-background: #F8FAFC;
-  --color-foreground: #020617;
-  --color-primary: #0F172A;
-  --color-primary-fg: #FFFFFF;
-  --color-secondary: #334155;
-  --color-accent: #0369A1;
-  --color-accent-fg: #FFFFFF;
-  --color-muted: #E8ECF1;
-  --color-muted-fg: #64748B;
-  --color-border: #E2E8F0;
-  --color-card: rgba(255, 255, 255, 0.6);
-  --color-ring: #0F172A;
-  --color-destructive: #DC2626;
-  --color-glass-bg: rgba(255, 255, 255, 0.3);
-  --color-glass-border: rgba(255, 255, 255, 0.35);
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-muted: var(--muted);
+  --color-muted-fg: var(--muted-fg);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
   --font-heading: 'Poppins', system-ui, sans-serif;
   --font-body: 'Open Sans', system-ui, sans-serif;
   --radius-sm: 0.5rem;
@@ -30,28 +67,10 @@
   --radius-3xl: 2rem;
 }
 
-/* ===== Dark Mode Overrides ===== */
-.dark {
-  --color-background: #020617;
-  --color-foreground: #F1F5F9;
-  --color-primary: #38BDF8;
-  --color-primary-fg: #020617;
-  --color-secondary: #94A3B8;
-  --color-accent: #0EA5E9;
-  --color-accent-fg: #FFFFFF;
-  --color-muted: #1E293B;
-  --color-muted-fg: #94A3B8;
-  --color-border: #1E293B;
-  --color-card: rgba(15, 23, 42, 0.6);
-  --color-ring: #38BDF8;
-  --color-glass-bg: rgba(15, 23, 42, 0.4);
-  --color-glass-border: rgba(255, 255, 255, 0.08);
-}
-
 /* ===== Base ===== */
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -61,10 +80,10 @@ body {
 
 /* ===== Glassmorphism ===== */
 .glass {
-  background: var(--color-glass-bg);
+  background: var(--glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--color-glass-border);
+  border: 1px solid var(--glass-border);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   transition: background 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
@@ -139,7 +158,7 @@ body {
 
 /* ===== Pricing Featured ===== */
 .pricing-featured {
-  border: 2px solid var(--color-accent);
+  border: 2px solid var(--accent);
   box-shadow: 0 8px 40px rgba(3, 105, 161, 0.15);
 }
 .dark .pricing-featured {
@@ -185,10 +204,10 @@ body {
 /* ===== Misc ===== */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
 }
 .focus-ring:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 4px;
 }
