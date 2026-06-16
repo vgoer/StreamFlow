@@ -5,39 +5,53 @@
 
 /* ===== Raw CSS Variables (light = default) ===== */
 :root {
-  --bg: #F8FAFC;
-  --fg: #020617;
-  --primary: #0F172A;
+  --bg: #FAFBFC;
+  --bg-subtle: #F4F6F8;
+  --fg: #0F172A;
+  --primary: #1E3A5F;
   --primary-fg: #FFFFFF;
-  --secondary: #334155;
-  --accent: #0369A1;
+  --secondary: #475569;
+  --accent: #0284C7;
   --accent-fg: #FFFFFF;
-  --muted: #E8ECF1;
+  --accent-light: #E0F2FE;
+  --muted: #F1F5F9;
   --muted-fg: #64748B;
   --border: #E2E8F0;
-  --card: rgba(255, 255, 255, 0.6);
-  --ring: #0F172A;
+  --border-light: #F1F5F9;
+  --card: rgba(255, 255, 255, 0.85);
+  --card-solid: #FFFFFF;
+  --ring: #0284C7;
   --destructive: #DC2626;
-  --glass-bg: rgba(255, 255, 255, 0.3);
-  --glass-border: rgba(255, 255, 255, 0.35);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
 }
 
 /* ===== Dark Mode ===== */
 .dark {
   --bg: #020617;
+  --bg-subtle: #0A1120;
   --fg: #F1F5F9;
   --primary: #38BDF8;
   --primary-fg: #020617;
   --secondary: #94A3B8;
   --accent: #0EA5E9;
   --accent-fg: #FFFFFF;
+  --accent-light: #082F49;
   --muted: #1E293B;
   --muted-fg: #94A3B8;
   --border: #1E293B;
+  --border-light: #0F172A;
   --card: rgba(15, 23, 42, 0.6);
+  --card-solid: #0F172A;
   --ring: #38BDF8;
   --glass-bg: rgba(15, 23, 42, 0.4);
   --glass-border: rgba(255, 255, 255, 0.08);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
 }
 
 /* ===== Tailwind Theme (references CSS variables) ===== */
@@ -77,6 +91,19 @@ body {
   overflow-x: hidden;
   transition: background 300ms ease, color 300ms ease;
 }
+/* Subtle noise texture overlay (light mode only) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+.dark body::before { opacity: 0; }
 
 /* ===== Glassmorphism ===== */
 .glass {
@@ -84,16 +111,16 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-md);
   transition: background 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
 
 .glass-strong {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-lg);
   transition: all 300ms ease;
 }
 
@@ -104,23 +131,26 @@ body {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
   transition: all 200ms ease;
 }
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.5);
-  border-color: rgba(255, 255, 255, 0.45);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--accent);
+  border-color: rgba(2, 132, 199, 0.2);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
 }
 
 .dark .glass-card {
   background: rgba(15, 23, 42, 0.35);
   border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: none;
 }
 .dark .glass-card:hover {
   background: rgba(15, 23, 42, 0.5);
@@ -130,7 +160,7 @@ body {
 
 /* ===== Text Gradient ===== */
 .text-gradient {
-  background: linear-gradient(135deg, #0369A1 0%, #0EA5E9 50%, #38BDF8 100%);
+  background: linear-gradient(135deg, #0284C7 0%, #0EA5E9 50%, #38BDF8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -144,10 +174,10 @@ body {
 
 /* ===== CTA Glow ===== */
 .cta-glow {
-  box-shadow: 0 4px 24px rgba(3, 105, 161, 0.3);
+  box-shadow: 0 4px 24px rgba(2, 132, 199, 0.25);
 }
 .cta-glow:hover {
-  box-shadow: 0 8px 36px rgba(3, 105, 161, 0.45);
+  box-shadow: 0 8px 36px rgba(2, 132, 199, 0.4);
 }
 .dark .cta-glow {
   box-shadow: 0 4px 24px rgba(14, 165, 233, 0.3);
@@ -167,10 +197,11 @@ body {
 
 /* ===== Navbar Glass ===== */
 .nav-glass {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   transition: all 300ms ease;
 }
 .dark .nav-glass {
@@ -178,6 +209,7 @@ body {
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 /* ===== Scroll Reveal (enhanced) ===== */

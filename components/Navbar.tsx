@@ -4,7 +4,16 @@ import { useI18n } from '@/hooks/useI18n';
 import ThemeToggle from './ThemeToggle';
 import { useState, useEffect, useCallback, type FC } from 'react';
 
-const SECTION_IDS = ['features', 'how-it-works', 'testimonials', 'pricing', 'faq'];
+const SECTION_IDS = ['features', 'how-it-works', 'testimonials', 'pricing', 'faq'] as const;
+
+/** Map section ID → i18n key */
+const navKeyMap: Record<string, string> = {
+  'features': 'features',
+  'how-it-works': 'howItWorks',
+  'testimonials': 'testimonials',
+  'pricing': 'pricing',
+  'faq': 'faq',
+};
 
 const Navbar: FC = () => {
   const { t, lang, setLang } = useI18n();
@@ -90,7 +99,7 @@ const Navbar: FC = () => {
                   href={`#${id}`}
                   className={linkClass}
                 >
-                  {t.nav[id as keyof typeof t.nav] as string}
+                  {t.nav[navKeyMap[id] as keyof typeof t.nav] as string}
                   {isActive(id) && (
                     <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent animate-scale-in" aria-hidden="true" />
                   )}
@@ -168,7 +177,7 @@ const Navbar: FC = () => {
                     : 'text-muted-fg hover:text-foreground hover:bg-muted'
                 }`}
               >
-                {t.nav[id as keyof typeof t.nav] as string}
+                {t.nav[navKeyMap[id] as keyof typeof t.nav] as string}
               </a>
             ))}
             <div className="pt-3 px-3 space-y-2">
