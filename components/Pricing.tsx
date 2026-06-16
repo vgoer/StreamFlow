@@ -8,32 +8,19 @@ export default function Pricing() {
 
   const plans = [
     {
-      name: t.pricing.free,
-      desc: t.pricing.freeDesc,
-      price: t.pricing.freePrice,
-      period: t.pricing.freePeriod,
+      name: t.pricing.free, desc: t.pricing.freeDesc, price: t.pricing.freePrice, period: t.pricing.freePeriod,
       features: [t.pricing.freeFeature1, t.pricing.freeFeature2, t.pricing.freeFeature3, t.pricing.freeFeature4],
-      cta: t.pricing.freeCTA,
-      featured: false,
+      cta: t.pricing.freeCTA, featured: false,
     },
     {
-      name: t.pricing.pro,
-      desc: t.pricing.proDesc,
-      price: t.pricing.proPrice,
-      period: t.pricing.proPeriod,
+      name: t.pricing.pro, desc: t.pricing.proDesc, price: t.pricing.proPrice, period: t.pricing.proPeriod,
       features: [t.pricing.proFeature1, t.pricing.proFeature2, t.pricing.proFeature3, t.pricing.proFeature4, t.pricing.proFeature5],
-      cta: t.pricing.proCTA,
-      featured: true,
-      badge: t.pricing.proBadge,
+      cta: t.pricing.proCTA, featured: true, badge: t.pricing.proBadge,
     },
     {
-      name: t.pricing.enterprise,
-      desc: t.pricing.enterpriseDesc,
-      price: t.pricing.enterprisePrice,
-      period: '',
+      name: t.pricing.enterprise, desc: t.pricing.enterpriseDesc, price: t.pricing.enterprisePrice, period: '',
       features: [t.pricing.enterpriseFeature1, t.pricing.enterpriseFeature2, t.pricing.enterpriseFeature3, t.pricing.enterpriseFeature4, t.pricing.enterpriseFeature5],
-      cta: t.pricing.enterpriseCTA,
-      featured: false,
+      cta: t.pricing.enterpriseCTA, featured: false,
     },
   ];
 
@@ -54,17 +41,24 @@ export default function Pricing() {
 
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-start">
           {plans.map((plan, i) => (
-            <ScrollReveal key={i} delay={i * 120}>
-              <div className={`relative rounded-2xl p-8 ${plan.featured ? 'pricing-featured glass-strong' : 'glass-card'}`}>
+            <ScrollReveal key={i} delay={i * 120} direction={plan.featured ? 'scale' : 'up'}>
+              <div
+                className={`relative rounded-2xl p-8 transition-all duration-300 group ${
+                  plan.featured
+                    ? 'pricing-featured glass-strong animate-float border-scan'
+                    : 'glass-card hover:scale-[1.02] hover:shadow-xl'
+                }`}
+                style={plan.featured ? { animationDuration: '5s' } : undefined}
+              >
                 {plan.badge && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-accent text-white text-xs font-semibold rounded-full whitespace-nowrap">
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-accent text-white text-xs font-semibold rounded-full whitespace-nowrap animate-slide-down">
                     {plan.badge}
                   </div>
                 )}
                 <h3 className="font-[family-name:var(--font-heading)] font-semibold text-xl text-foreground mb-2">{plan.name}</h3>
                 <p className="text-muted-fg text-sm mb-5">{plan.desc}</p>
                 <div className="mb-6">
-                  <span className="font-[family-name:var(--font-heading)] font-bold text-5xl text-foreground">{plan.price}</span>
+                  <span className="font-[family-name:var(--font-heading)] font-bold text-5xl text-foreground animate-scale-in">{plan.price}</span>
                   {plan.period && <span className="text-muted-fg text-sm">{plan.period}</span>}
                 </div>
                 <ul className="space-y-3 mb-8" role="list">
@@ -81,13 +75,17 @@ export default function Pricing() {
                 </ul>
                 <a
                   href="#"
-                  className={`block w-full text-center px-6 py-3 text-sm font-semibold rounded-xl transition-all duration-200 focus-ring ${
+                  className={`block w-full text-center px-6 py-3 text-sm font-semibold rounded-xl transition-all duration-300 focus-ring relative overflow-hidden group/btn ${
                     plan.featured
                       ? 'text-white bg-accent hover:opacity-90 active:opacity-80 shadow-lg cta-glow'
                       : 'text-foreground glass hover:bg-glass-bg/60'
                   }`}
                 >
-                  {plan.cta}
+                  {/* Scan line for featured CTA */}
+                  {plan.featured && (
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out" aria-hidden="true" />
+                  )}
+                  <span className="relative z-10">{plan.cta}</span>
                 </a>
               </div>
             </ScrollReveal>

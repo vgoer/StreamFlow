@@ -37,14 +37,26 @@ export default function FAQ() {
         <div className="space-y-3" role="list">
           {items.map((item, i) => (
             <ScrollReveal key={i} delay={i * 80}>
-              <div className={`faq-item glass border border-border rounded-xl ${openIndex === i ? 'open' : ''}`} role="listitem">
+              <div
+                className={`faq-item glass border border-border rounded-xl transition-all duration-300 ${
+                  openIndex === i ? 'open shadow-md' : 'hover:border-accent/20'
+                }`}
+                role="listitem"
+              >
                 <button
                   onClick={() => toggle(i)}
-                  className="w-full flex items-center justify-between px-6 py-4 text-left focus-ring rounded-xl"
+                  className="w-full flex items-center justify-between px-6 py-4 text-left focus-ring rounded-xl group"
                   aria-expanded={openIndex === i}
                 >
-                  <span className="font-semibold text-foreground pr-4">{item.q}</span>
-                  <svg className="faq-icon w-5 h-5 text-muted-fg flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <span className="font-semibold text-foreground pr-4 group-hover:text-accent transition-colors duration-200">{item.q}</span>
+                  <svg
+                    className="faq-icon w-5 h-5 text-muted-fg flex-shrink-0 group-hover:text-accent transition-colors duration-200"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                   </svg>
                 </button>
